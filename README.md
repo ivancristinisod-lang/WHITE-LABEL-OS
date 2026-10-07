@@ -1,37 +1,33 @@
-# White Label OS
+# WHITE LABEL OS
 
-A task-first, configurable multi-tenant operating system. This repository is isolated from SØD OS and contains only synthetic Northstar Demo data.
+A task-first, configurable, multi-tenant operating system extracted from the reusable product patterns learned in SØD OS, without modifying or depending on SØD production.
 
-Canonical product/repository name: **WHITE LABEL OS** / `WHITE-LABEL-OS`.
+## Current build
 
-## What is implemented
+- Responsive dashboard with interactive **Abiertas / Hoy / Bloqueos / Decisiones** filters.
+- Tickets with dynamic responsible dropdown sourced from active profiles.
+- Subtasks, explicit ticket closure, evidence requirement, rescheduling and 10-second undo.
+- Departments, internal Inbox, history, archive, team and tenant settings.
+- Synthetic Northstar Demo mode for safe preview without external credentials.
+- Supabase/Postgres schema for organizations, memberships, roles/capabilities, tickets, subtasks, decisions, evidence, inbox, notifications, configuration, integrations and append-only audit.
+- Tenant RLS and private storage policies.
+- CI quality gate and static security checks.
 
-- Responsive Next.js App Router interface for dashboard, tickets, subtasks, departments, decisions, inbox, audit history, archive, team and tenant settings.
-- Tenant-neutral domain rules for optimistic concurrency, explicit closure, evidence requirements and bounded undo.
-- Supabase migrations for organizations, memberships, configurable roles/capabilities, work objects, audit, notifications, branding and integrations.
-- Defense-in-depth authorization: active-membership RLS plus server-side capability checks.
-- Private tenant-namespaced Storage policies for organization assets and evidence.
-- Synthetic demo seed and adversarial SQL tests.
-- GitHub CI for lint, typecheck, unit tests, build and migration safety checks.
-
-## Start locally
-
-```bash
-pnpm install
-pnpm dev
-```
-
-The UI runs in demo mode when isolated Supabase variables are absent. Copy `.env.example` to `.env.local` only when connecting a new White Label project. Never paste SØD production credentials.
-
-## Verify
+## Local
 
 ```bash
-pnpm check
-pnpm build
+npm install
+npm run dev
 ```
 
-Database tests require an isolated local/preview Supabase database. See `docs/runbook.md`.
+Then open `/dashboard`.
 
-## Safety
+## Database
 
-SØD production, its repository, Drive/Sheets, users, identifiers, secrets and operational data are intentionally out of scope. The reference audit is stored outside this repository in the task workspace.
+Apply the migrations in `supabase/migrations` to a **new isolated White Label Supabase project**. Never point this repository at SØD production.
+
+## Product boundary
+
+SØD OS is reference-only. This repository contains no SØD operational data, users, organization IDs, Drive IDs, production URLs or secrets.
+
+See `docs/architecture.md` and `docs/runbook.md`.

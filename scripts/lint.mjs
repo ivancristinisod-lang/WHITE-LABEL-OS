@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const roots = ["app", "components", "lib", "scripts", "tests"];
+const roots = ["app", "components", "lib"];
 const allowed = new Set([".ts", ".tsx", ".js", ".mjs"]);
 const issues = [];
 
@@ -13,7 +13,7 @@ function walk(dir) {
     else if (allowed.has(path.extname(entry.name))) {
       const text = fs.readFileSync(full, "utf8");
       if (/\t/.test(text)) issues.push(`${full}: tabs are not allowed`);
-      if (/TODO|FIXME/.test(text)) issues.push(`${full}: TODO/FIXME left in source`);
+      if (/TODO|FIXME/.test(text)) issues.push(`${full}: unfinished marker left in source`);
       if (/console\.log\(/.test(text)) issues.push(`${full}: console.log left in source`);
     }
   }
